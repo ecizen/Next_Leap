@@ -1,3 +1,4 @@
+"use client"
 import OtherSignIn from "../components/molecules/other_sign";
 import SignForm from "../components/organism/signin-form";
 
