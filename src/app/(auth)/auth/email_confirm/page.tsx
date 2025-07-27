@@ -1,6 +1,9 @@
 'use client'
+
+export const dynamic = 'force-dynamic' // Memastikan halaman ini render secara dinamis (no static prerender)
+
 import { useSearchParams, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { checkUserVerified, resendVerificationEmail } from './action'
 
@@ -12,28 +15,13 @@ export default function ConfirmPage() {
   const [error, setError] = useState('')
   const router = useRouter()
 
-  // useEffect(() => {
-  //   const checkVerification = async () => {
-  //     try {
-  //       const isVerified = await checkUserVerified()
-  //       if (isVerified) {
-  //         router.push('/')
-  //       }
-  //     } catch (err) {
-  //       console.error('Verification check error:', err)
-  //     }
-  //   }
-
-  //   checkVerification()
-  //   const interval = setInterval(checkVerification, 5000)
-  //   return () => clearInterval(interval)
-  // }, [router])
+  // Jika ingin pakai cek verifikasi berkala, bisa diaktifkan kembali dengan useEffect (pastikan 'use client')
 
   const handleResend = async () => {
     setIsLoading(true)
     setError('')
     setMessage('')
-    
+
     try {
       const { error } = await resendVerificationEmail(email)
       if (error) {
