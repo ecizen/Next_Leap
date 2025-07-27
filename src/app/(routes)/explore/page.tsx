@@ -1,11 +1,9 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import ExploreNav from "@/app/components/organisms/explore-nav";
 import FilterSide from "@/app/components/organisms/filter-side";
 import JobList from "@/app/components/organisms/job-list";
 import useJobs, { FilterOptions } from "@/hook/useJob";
-import LoadingWithDelay from "@/app/components/molecules/loading";
 
 const ExplorePage = () => {
   const [filters, setFilters] = useState<FilterOptions>({
@@ -17,9 +15,7 @@ const ExplorePage = () => {
 
   const { jobs, loading, error, observerRef } = useJobs(filters);
 
-  const [showLoading, setShowLoading] = useState(true);
 
- 
   return (
     <>
       <ExploreNav onSearchChange={setFilters} />
