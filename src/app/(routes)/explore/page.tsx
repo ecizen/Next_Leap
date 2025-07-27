@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import ExploreNav from "@/app/components/organisms/explore-nav";
 import FilterSide from "@/app/components/organisms/filter-side";
 import JobList from "@/app/components/organisms/job-list";
@@ -15,10 +15,12 @@ const ExplorePage = () => {
 
   const { jobs, loading, error, observerRef } = useJobs(filters);
 
-
   return (
     <>
-      <ExploreNav onSearchChange={setFilters} />
+      <Suspense fallback={<div>Loading filter...</div>}>
+        <ExploreNav onSearchChange={setFilters} />
+      </Suspense>
+
       <main className="overflow-x-hidden bg-white">
         <div className="flex">
           <div className="col-span-1 lg:w-[20vw] lg:block hidden">
