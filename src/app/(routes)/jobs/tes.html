@@ -1,0 +1,118 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
+
+type JobDetailType = {
+  id: string;
+  job_title: string;
+  company_name: string;
+  city: string;
+  country: string;
+  job_details?: Array<{
+    description?: string;
+    responsibilities?: string[];
+    requirements?: string[];
+    skills?: string[];
+    benefit?: string[];
+    created_at?: string;
+  }>;
+};
+
+export default function JobDetailPage() {
+  const params = useParams();
+  const jobId = params.id;
+  const supabase = createClient();
+
+  const [job, setJob] = useState<JobDetailType | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchJob() {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from("jobs")
+          .select("*, job_details(*)")
+          .eq("id", jobId)
+          .single();
+
+        if (error) throw error;
+        setJob(data);
+      } catch (err) {
+        console.error("Error fetching job:", err);
+        setJob(null);
+      }
+      setLoading(false);
+    }
+
+    if (jobId) {
+      fetchJob();
+    }
+  }, [jobId]);
+
+  if (loading) return <p>Loading...</p>;
+  if (!job) return <p>Job not found.</p>;
+
+  // Ambil objek job_details pertama (kalau ada)
+  const detail = job.job_details?.[0];
+
+  return (
+    <div className="p-6 max-w-3xl mx-auto">
+      <h1 className="text-3xl font-bold mb-2">{job.job_title}</h1>
+      <p className="text-gray-600 mb-6">
+        {job.company_name} - {job.city}, {job.country}
+      </p>
+
+      <section className="mb-6">
+        <h2 className="text-xl font-semibold mb-1">Description</h2>
+        <p>{detail?.description || "No description provided."}</p>
+      </section>
+
+      <section className="mb-6">
+        <h2 className="text-xl font-semibold mb-1">Responsibilities</h2>
+        <ul className="list-disc pl-6">
+          {detail?.responsibilities && detail.responsibilities.length > 0 ? (
+            detail.responsibilities.map((item, i) => <li key={i}>{item}</li>)
+          ) : (
+            <li>No responsibilities listed.</li>
+          )}
+        </ul>
+      </section>
+
+      <section className="mb-6">
+        <h2 className="text-xl font-semibold mb-1">Requirements</h2>
+        <ul className="list-disc pl-6">
+          {detail?.requirements && detail.requirements.length > 0 ? (
+            detail.requirements.map((item, i) => <li key={i}>{item}</li>)
+          ) : (
+            <li>No requirements listed.</li>
+          )}
+        </ul>
+      </section>
+
+      <section className="mb-6">
+        <h2 className="text-xl font-semibold mb-1">Skills</h2>
+        <ul className="list-disc pl-6">
+          {detail?.skills && detail.skills.length > 0 ? (
+            detail.skills.map((item, i) => <li key={i}>{item}</li>)
+          ) : (
+            <li>No skills listed.</li>
+          )}
+        </ul>
+      </section>
+
+      <section>
+        <h2 className="text-xl font-semibold mb-1">Benefits</h2>
+        <ul className="list-disc pl-6">
+          {detail?.benefit && detail.benefit.length > 0 ? (
+            detail.benefit.map((item, i) => <li key={i}>{item}</li>)
+          ) : (
+            <li>No benefits listed.</li>
+          )}
+        </ul>
+      </section>
+    </div>
+  );
+}
