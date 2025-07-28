@@ -68,6 +68,7 @@ const JobDetail = ({
           <div className="gap-x-2  sm:space-x-2 lg:flex grid grid-cols-2 w-full sm:w-auto justify-end">
             {/* <DrawerAppy jobId={id}/> */}
             <ApplyForm
+            jobId={id}
               job_title={job_title}
               company_name={company_name}
               city={city}
