@@ -162,6 +162,7 @@ const ApplyForm = ({
     if (error) {
       setErrorMsg("Gagal mengirim lamaran: " + error.message);
     } else {
+      alert("lamaran berhasil terkirim")
       setSuccessMsg("Lamaran berhasil dikirim!");
       reset();
       setStep(1);
@@ -179,7 +180,6 @@ const ApplyForm = ({
     } = await supabase.auth.getSession();
 
     if (!session) {
-      // Kalau belum login, redirect ke halaman signin
       router.push("/authentication/signin"); // sesuaikan route sign in kamu
       return;
     }
