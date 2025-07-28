@@ -1,3 +1,6 @@
+'use client';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Sheet,
   SheetContent,
@@ -8,14 +11,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import StepProgress from "../molecules/progres-indikator";
-import { useState } from "react";
-import { ApplyFormData1 } from "@/types/job";
 import Step1PersonalInformation from "../molecules/step1";
 import Step2PersonalExperinece from "../molecules/step2";
 import Step3Review from "../molecules/step3";
 import { useForm } from "react-hook-form";
 import { createClient } from "@/utils/supabase/client";
 import { Button } from "@/components/ui/button";
+import type { ApplyFormData1 } from "@/types/job";
 
 interface applyProp {
   jobId: string;
@@ -40,6 +42,8 @@ const ApplyForm = ({
   const [errorMsg, setErrorMsg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const router = useRouter();
   const supabase = createClient();
 
   const form = useForm<ApplyFormData1>({
@@ -168,12 +172,31 @@ const ApplyForm = ({
     }
   };
 
+  // Function handle click tombol Apply form
+  const handleApplyClick = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      // Kalau belum login, redirect ke halaman signin
+      router.push("/authentication/signin"); // sesuaikan route sign in kamu
+      return;
+    }
+    // Kalau sudah login, buka sheet
+    setIsOpen(true);
+  };
+
   return (
     <>
-      <Sheet>
-        <SheetTrigger className="text-white text-xs rounded-md bg-purple-600 px-4 cursor-pointer">
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        {/* Ganti SheetTrigger jadi tombol biasa yang handle onClick */}
+        <button
+          onClick={handleApplyClick}
+          className="text-white text-xs rounded-md bg-purple-600 px-4 cursor-pointer"
+        >
           Apply form
-        </SheetTrigger>
+        </button>
         <SheetContent className="pt-6  sm:max-w-[490px] overflow-y-auto">
           <SheetHeader className="border-b">
             <SheetTitle className="text-xl">{job_title}</SheetTitle>
