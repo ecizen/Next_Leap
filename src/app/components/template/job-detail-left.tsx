@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import DrawerForm from "../molecules/drawer-form";
 import DrawerAppy from "../organisms/drawer-appy";
+import ApplyForm from "../organisms/apply-form";
 
 const JobDetail = ({
   id,
@@ -65,7 +66,14 @@ const JobDetail = ({
             </div>
           </div>
           <div className="gap-x-2  sm:space-x-2 lg:flex grid grid-cols-2 w-full sm:w-auto justify-end">
-            <DrawerAppy jobId={id}/>
+            {/* <DrawerAppy jobId={id}/> */}
+            <ApplyForm
+              job_title={job_title}
+              company_name={company_name}
+              city={city}
+              country={country}
+              work_type={work_type}
+            />
             <Button className="bg-white border  hover:border-purple-600 hover:bg-white border-gray-100 shadow-none text-xs px-3 h-9 w-full sm:w-auto text-purple-600 transition-colors ease-in-out">
               Saved
             </Button>

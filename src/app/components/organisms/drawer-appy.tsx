@@ -33,7 +33,7 @@ const DrawerApply = ({ jobId }: { jobId: string }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
+ 
   const form = useForm<ApplyFormData>({
     mode: "onSubmit",
     defaultValues: {

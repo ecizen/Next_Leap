@@ -34,7 +34,6 @@ export default function Step2CVPortfolio({ form }: Props) {
       </CardHeader>
 
       <CardContent className="space-y-5 px-4">
-        {/* CV Upload */}
         <div className="space-y-1.5">
           <Label htmlFor="resume" className="text-sm flex items-center gap-2">
           Resume

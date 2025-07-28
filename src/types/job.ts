@@ -50,7 +50,6 @@ export interface CardProps {
   postedAt: string;
 }
 
-
 export type ApplyFormData = {
   name: string;
   email: string;
@@ -63,6 +62,20 @@ export type ApplyFormData = {
   salary?: number;
   agree?: boolean;
 };
+export type ApplyFormData1 = {
+  fullname: string;
+  email: string;
+  phone: string;
+  location: string;
+  linkedln: string;
+  position: string;
+  experience: string;
+ skill: string | string[];
+  resume: File;
+  portfolio?: string;
+  coverLetter?: string;
+  agree? : boolean
+};
 
 export type JobDetailType = {
   id: string;
@@ -72,7 +85,7 @@ export type JobDetailType = {
   city: string;
   country: string;
   tags: string[];
-   salary: Salary;
+  salary: Salary;
   work_type: string;
   work_mode: string;
   experience_min: number | null;
@@ -100,7 +113,6 @@ export type JobCardPropsDetail = {
     description?: string;
   }>;
 };
-
 
 export const mapJobFromDb = (job: JobFromDb): CardProps => {
   const salary: Salary =
