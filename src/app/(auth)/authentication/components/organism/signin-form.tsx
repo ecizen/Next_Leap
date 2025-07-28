@@ -18,6 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { login } from "../../signin/action";
+import Link from "next/link";
 
 
 type FormData = {
@@ -130,12 +131,11 @@ const SignForm = () => {
           <Label className="text-xs text-gray-400">
             Dont't have an account?{" "}
           </Label>
-          <button
-            formAction={login}
-            className="text-black bg-white font-semibold text-xs"
-          >
+          <a href="/auhtentication/signup" className="text-black bg-white font-semibold text-xs">
+            
             Sign Up
-          </button>
+
+            </a>
         </div>
       </form>
     </Form>

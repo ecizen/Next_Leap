@@ -181,7 +181,7 @@ const SignUpForm = () => {
         <div className="flex items-center justify-center space-x-0.5">
           <Label className="text-xs text-gray-400">have an account? </Label>
           <a
-            href="/login"
+            href="/authentication/signin"
             className="text-black bg-white font-semibold text-xs"
           >
             Sign In
